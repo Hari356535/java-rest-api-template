@@ -16,4 +16,9 @@ spotless {
 
         licenseHeader '/* (C) $YEAR */' // or licenseHeaderFile
     }
+
+    groovyGradle {
+        greclipse()
+        indentWithSpaces(4)
+    }
 }

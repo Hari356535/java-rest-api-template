@@ -1,9 +1,9 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.2.+'
-	id 'io.spring.dependency-management' version '1.1.4'
-	id "com.diffplug.spotless" version "6.+"
-	id 'jacoco'
+    id 'java'
+    id 'org.springframework.boot' version '3.2.+'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id "com.diffplug.spotless" version "6.+"
+    id 'jacoco'
 }
 
 apply from: 'gradle/spotless.gradle'
@@ -16,66 +16,68 @@ sourceCompatibility = '21'
 targetCompatibility = '21'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	// Spring Dependencies
-	implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.+'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.+'
-	implementation 'org.springframework.boot:spring-boot-starter-web:3.2.+'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux:3.2.+'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.+'
+    // Spring Dependencies
+    implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.+'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.+'
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.2.+'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:3.2.+'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.+'
 
-	// Uncomment if you wish to use Docker Compose on local application startup
-	//developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    // Uncomment if you wish to use Docker Compose on local application startup
+    //developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 
-	// OpenAPI Auto-Generated Documentation
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.+'
+    // OpenAPI Auto-Generated Documentation
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.+'
 
-	// Mock DB
-	implementation 'com.h2database:h2'
+    // Mock DB
+    implementation 'com.h2database:h2'
 
-	// Lombok
-	compileOnly 'org.projectlombok:lombok:1.18.+'
-	annotationProcessor 'org.projectlombok:lombok:1.18.+'
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.+'
+    annotationProcessor 'org.projectlombok:lombok:1.18.+'
 
-	// Inter-Object Mapping
-	implementation "org.mapstruct:mapstruct:$mapstructVersion"
-	annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
-	testAnnotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+    // Inter-Object Mapping
+    implementation "org.mapstruct:mapstruct:$mapstructVersion"
+    annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
+    testAnnotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
 
-	// Unit testing
-	testImplementation 'org.mockito:mockito-core:5.+'
-	testImplementation 'org.instancio:instancio-junit:4.+' // Creating test fixtures
-	testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.+' // Mocking WebClient calls
+    // Unit testing
+    testImplementation 'org.mockito:mockito-core:5.+'
+    testImplementation 'org.instancio:instancio-junit:4.+' // Creating test fixtures
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.12.+' // Mocking WebClient calls
 
-	// Arch Unit
-	testImplementation 'com.tngtech.archunit:archunit-junit5:1.2.1'
+    // Arch Unit
+    testImplementation 'com.tngtech.archunit:archunit-junit5:1.2.1'
 
-	// Wiremock
-	testImplementation 'org.wiremock:wiremock-standalone:3.5.+'
+    // Wiremock
+    testImplementation 'org.wiremock:wiremock-standalone:3.5.+'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
-	finalizedBy jacocoTestReport // report is always generated after tests run
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
 }
 
 jacocoTestReport {
-	dependsOn test // tests are required to run before generating the report
+    dependsOn test // tests are required to run before generating the report
 }
 
 bootRun {
-	args = ["--spring.profiles.active=local"]
+    args = [
+        "--spring.profiles.active=local"
+    ]
 }
 
 tasks.named("processIntegrationResources", Copy) {
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
