@@ -15,6 +15,8 @@ on:
 
 permissions:
   contents: read
+  checks: write
+  pull-requests: write
 
 jobs:
   build:
@@ -35,7 +37,12 @@ jobs:
         gradle-version: wrapper
 
     - name: Build and Unit Test with Gradle
-      run: gradle test
+      run: gradle test spotbugsMain
+
+    - name: Upload SpotBugs Report
+      uses: lcollins/spotbugs-github-action@v3.0.0
+      with:
+        path: 'build/spotbugs/main.xml'
 
     - name: Run Integration Tests
       env:
@@ -47,7 +54,7 @@ jobs:
       uses: madrapps/jacoco-report@v1.6.1
       with:
         paths: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml
-        token: ${{ secrets.JACOCO_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         update-comment: true
         title: 'JaCoCo Report'
         min-coverage-overall: 40
