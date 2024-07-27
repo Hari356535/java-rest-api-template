@@ -19,12 +19,3 @@ spotbugsTest {
         xml.enabled = true
     }
 }
-
-pmd {
-    toolVersion = "7.0.0"
-    consoleOutput = false
-    ignoreFailures = true
-    maxFailures = 3
-    rulesMinimumPriority = 5
-    ruleSets = ["category/java/errorprone.xml", "category/java/bestpractices.xml"]
-}
